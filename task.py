@@ -34,7 +34,6 @@ async def delete_task():
 
 class Task(Base):
     __tablename__ = "tasks"
-
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     content = Column(String, nullable=False)
@@ -42,6 +41,8 @@ class Task(Base):
     completed = Column(Boolean, default=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
     slug = Column(String, unique=True, index=True)
-
-    # Связь с моделью User
     user = relationship("User", back_populates="tasks")
+
+from sqlalchemy.schema import CreateTable
+
+print(CreateTable(Task.__table__))
